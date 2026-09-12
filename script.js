@@ -13,7 +13,34 @@ const portfolio = [
 const webReady = new Set(portfolio.flatMap((group) => group.items.map(([file]) => file)));
 const webFilename = {'GAME-4523.mov':'GAME-4523.mp4','111.mov':'111.mp4'};
 const portfolioAssetBase = location.hostname === '0xbreadman.github.io' ? 'https://github.com/0xBreadman/canyon.pan/releases/download/media-v1' : './assets/portfolio-web';
-document.querySelectorAll('.media-frame video[data-media-file]').forEach((video) => { video.src = `${portfolioAssetBase}/${encodeURIComponent(video.dataset.mediaFile)}`; });
+const portfolioMediaName = new Map(portfolio.flatMap((group) => group.items).map(([file], index) => [webFilename[file] || file, `media-${String(index + 1).padStart(3, '0')}.mp4`]));
+const portfolioMediaUrl = (file) => `${portfolioAssetBase}/${encodeURIComponent(location.hostname === '0xbreadman.github.io' ? portfolioMediaName.get(file) : file)}`;
+const releaseAssetBase = 'https://github.com/0xBreadman/canyon.pan/releases/download/media-v1';
+if (location.hostname === '0xbreadman.github.io') {
+  document.querySelectorAll('a[href="./assets/portfolio/个人简历.pdf"]').forEach((link) => { link.href = `${releaseAssetBase}/default.pdf`; });
+}
+const syncVideoStage = (video) => {
+  const stage = video.closest('.video-stage');
+  const frame = stage?.parentElement;
+  if (!stage || !frame || !video.videoWidth || !video.videoHeight) return;
+  const frameWidth = frame.clientWidth;
+  const frameHeight = frame.clientHeight;
+  const videoRatio = video.videoWidth / video.videoHeight;
+  const frameRatio = frameWidth / frameHeight;
+  const width = frameRatio > videoRatio ? frameHeight * videoRatio : frameWidth;
+  const height = frameRatio > videoRatio ? frameHeight : frameWidth / videoRatio;
+  stage.style.width = `${width}px`;
+  stage.style.height = `${height}px`;
+};
+document.querySelectorAll('.media-frame video[data-media-file]').forEach((video) => {
+  const stage = document.createElement('div');
+  stage.className = 'video-stage';
+  video.before(stage);
+  stage.append(video);
+  video.src = portfolioMediaUrl(video.dataset.mediaFile);
+  video.addEventListener('loadedmetadata', () => syncVideoStage(video));
+});
+window.addEventListener('resize', () => document.querySelectorAll('.video-stage video').forEach(syncVideoStage));
 const groupZh = {'Brand collaborations':'品牌联名','Brand promotion':'品牌宣传内容','Product introductions':'产品介绍','Social media':'社媒视频','Offline campaigns':'线下活动宣传','E-commerce main visuals':'电商主图','Feed advertising':'信息流广告类','AI advertising':'AI 类广告'};
 const labelZh = {'Brand collaboration':'品牌联名','Brand film':'品牌宣传','Product introduction':'产品介绍','Social content':'社媒内容','Offline campaign':'线下活动','E-commerce main visual':'电商主图','Feed advertising':'信息流广告','AI advertising':'AI 广告'};
 const gallery = document.querySelector('#portfolio-gallery');
@@ -24,7 +51,7 @@ if (gallery) portfolio.forEach((group, groupIndex) => {
   const grid = section.querySelector('.gallery-grid');
   group.items.forEach(([file, label], index) => {
     const item = document.createElement('article'); item.className = 'gallery-item';
-    const video = document.createElement('video'); const resolvedFile = webFilename[file] || file; video.dataset.src = `${portfolioAssetBase}/${encodeURIComponent(resolvedFile)}`; video.muted = true; video.loop = true; video.playsInline = true; video.preload = 'none';
+    const video = document.createElement('video'); const resolvedFile = webFilename[file] || file; video.dataset.src = portfolioMediaUrl(resolvedFile); video.muted = true; video.loop = true; video.playsInline = true; video.preload = 'none';
     video.addEventListener('loadedmetadata', () => { if (video.videoWidth && video.videoHeight) item.style.aspectRatio = `${video.videoWidth} / ${video.videoHeight}`; });
     item.dataset.enLabel = label; item.dataset.zhLabel = labelZh[label] || label;
     const pieceNumber = `${String(groupIndex + 1).padStart(2,'0')}.${String(index + 1).padStart(2,'0')}`;
