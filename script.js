@@ -17,7 +17,6 @@ const portfolioMediaName = new Map(portfolio.flatMap((group) => group.items).map
 const portfolioMediaUrl = (file) => `${portfolioAssetBase}/${encodeURIComponent(location.hostname === '0xbreadman.github.io' ? portfolioMediaName.get(file) : file)}`;
 const releaseAssetBase = 'https://github.com/0xBreadman/canyon.pan/releases/download/media-v1';
 if (location.hostname === '0xbreadman.github.io') {
-  document.querySelectorAll('img[src="./assets/site-cases/jewelry-shop.png"]').forEach((image) => { image.src = `${releaseAssetBase}/jewelry-shop.png`; });
   document.querySelectorAll('a[href="./assets/portfolio/个人简历.pdf"]').forEach((link) => { link.href = `${releaseAssetBase}/default.pdf`; });
 }
 document.querySelectorAll('.media-frame video[data-media-file]').forEach((video) => { video.src = portfolioMediaUrl(video.dataset.mediaFile); });
