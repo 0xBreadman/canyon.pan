@@ -179,3 +179,20 @@ html{scroll-padding-top:90px}
 .linkedin-card figcaption{display:flex;justify-content:space-between;gap:14px;margin-top:14px;padding-top:11px;border-top:1px solid var(--ink);font-size:10px;letter-spacing:.09em;text-transform:uppercase}
 .linkedin-card figcaption strong{white-space:nowrap}.linkedin-card figcaption a{color:var(--muted);text-align:right}
 @media(max-width:760px){.hero-actions{gap:14px 18px}.button-outline{order:2}.contact-jump{order:3}.contact-layout{grid-template-columns:1fr}.contact-cards{grid-template-columns:1fr;gap:42px}.wechat-card,.linkedin-card{width:min(100%,280px);box-shadow:12px 12px 0 #252525}.wechat-qr-frame{width:100%}}
+
+/* Open exhibition-label contact layout */
+.contact-cards{gap:clamp(34px,5vw,82px);align-items:start;padding-top:4px}
+.wechat-card,.linkedin-card{width:100%;padding:0;background:transparent;border:0;box-shadow:none}
+.wechat-card-head{grid-template-columns:auto 1fr auto;gap:12px;padding:0 0 14px;border-bottom:1px solid rgba(240,236,228,.5);color:var(--paper)}
+.wechat-card-head span{font-size:11px;color:#aaa}
+.wechat-card-head i{order:-1;width:8px;height:8px;background:#ff4e3f}
+.wechat-card-head b{font-size:11px;color:#aaa;font-weight:400}
+.wechat-qr-stage,.linkedin-qr-stage{margin-top:16px;padding:0;background:transparent}
+.wechat-qr-stage:before,.wechat-qr-stage:after,.linkedin-qr-stage:before,.linkedin-qr-stage:after{display:none}
+.wechat-qr-frame,.linkedin-qr-frame{width:100%;aspect-ratio:1;background:#f7f4ee;padding:12px}
+.wechat-qr-frame img{position:absolute;width:161.8%;max-width:none;height:auto;left:-31%;top:-75.2%;filter:grayscale(1) contrast(1.65)}
+.linkedin-qr-frame img{display:block;width:100%;height:100%;object-fit:contain;image-rendering:pixelated}
+.wechat-card figcaption,.linkedin-card figcaption{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-top:16px;padding:14px 0 0;border-top:1px solid rgba(240,236,228,.5);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--paper)}
+.wechat-card figcaption strong,.linkedin-card figcaption strong{font-weight:700;white-space:nowrap}
+.wechat-card figcaption span,.linkedin-card figcaption a{color:#aaa;text-align:right}
+@media(max-width:760px){.contact-cards{gap:48px}.wechat-card figcaption,.linkedin-card figcaption{font-size:10px}}
