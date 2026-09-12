@@ -18,7 +18,7 @@ const portfolioMediaUrl = (file) => `${portfolioAssetBase}/${encodeURIComponent(
 const releaseAssetBase = 'https://github.com/0xBreadman/canyon.pan/releases/download/media-v1';
 if (location.hostname === '0xbreadman.github.io') {
   document.querySelectorAll('img[src="./assets/site-cases/jewelry-shop.png"]').forEach((image) => { image.src = `${releaseAssetBase}/jewelry-shop.png`; });
-  document.querySelectorAll('a[href="./assets/portfolio/个人简历.pdf"]').forEach((link) => { link.href = `${releaseAssetBase}/${encodeURIComponent('个人简历.pdf')}`; });
+  document.querySelectorAll('a[href="./assets/portfolio/个人简历.pdf"]').forEach((link) => { link.href = `${releaseAssetBase}/default.pdf`; });
 }
 document.querySelectorAll('.media-frame video[data-media-file]').forEach((video) => { video.src = portfolioMediaUrl(video.dataset.mediaFile); });
 const groupZh = {'Brand collaborations':'品牌联名','Brand promotion':'品牌宣传内容','Product introductions':'产品介绍','Social media':'社媒视频','Offline campaigns':'线下活动宣传','E-commerce main visuals':'电商主图','Feed advertising':'信息流广告类','AI advertising':'AI 类广告'};
