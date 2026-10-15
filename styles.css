@@ -196,3 +196,11 @@ html{scroll-padding-top:90px}
 .wechat-card figcaption strong,.linkedin-card figcaption strong{font-weight:700;white-space:nowrap}
 .wechat-card figcaption span,.linkedin-card figcaption a{color:#aaa;text-align:right}
 @media(max-width:760px){.contact-cards{gap:48px}.wechat-card figcaption,.linkedin-card figcaption{font-size:10px}}
+
+/* Responsive workspace case — preserve every source composition */
+.case-visual.case-gallery.case-workspace-gallery{grid-template-columns:minmax(0,1.55fr) minmax(0,1fr) minmax(108px,.42fr);gap:10px;align-items:start}
+.case-visual.case-workspace-gallery img:first-child{grid-column:1 / 3}
+.case-visual.case-workspace-gallery img:nth-child(2){grid-column:1}
+.case-visual.case-workspace-gallery img:nth-child(3){grid-column:2}
+.case-visual.case-workspace-gallery img:nth-child(4){grid-column:3;grid-row:1 / 3}
+@media(max-width:800px){.case-visual.case-gallery.case-workspace-gallery{display:flex;flex-direction:column;gap:10px}.case-visual.case-workspace-gallery img{width:100%}.case-visual.case-workspace-gallery img:nth-child(4){width:54%;align-self:flex-end}}
