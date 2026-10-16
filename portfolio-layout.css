@@ -96,11 +96,11 @@ html[lang="zh-CN"] .timeline-item.current h3:after{content:'在职'}
 @media(max-width:600px){[data-page="contact"]{padding:22px 14px 16px}.contact-overline{margin-bottom:16px}.contact-sheet h1{font-size:32px}.contact-intro{font-size:12px;margin-bottom:18px}.contact-direct{display:block;padding:14px 0;font-size:16px}.contact-direct .contact-resume{display:block;margin-top:14px}.contact-qr-pair{gap:20px;margin-top:24px}.contact-code{width:calc((100% - 20px)/2);max-width:170px}.qr-paper{padding:12px}.contact-code figcaption{flex-direction:column;gap:3px;margin-top:10px}.contact-location{margin-top:20px}}
 @media(max-height:700px) and (min-width:601px){[data-page="contact"]{padding-top:18px}.contact-overline{margin-bottom:12px}.contact-sheet h1{font-size:38px}.contact-intro{margin-bottom:16px}.contact-qr-pair{margin-top:20px}.contact-code{width:150px}.contact-location{margin-top:16px}}
 /* Chinese navigation: quieter typesetting, independent of content and English. */
-.studio-sidebar nav a{line-height:clamp(25.3px,2.2vw,33px)}
+.studio-sidebar nav a{height:clamp(25.3px,2.2vw,33px);flex-shrink:0;align-items:center;line-height:clamp(25.3px,2.2vw,33px)}
 html[lang="zh-CN"] .studio-sidebar nav{gap:12px}
 html[lang="zh-CN"] .studio-sidebar nav a{font-family:"PingFang SC","Noto Sans CJK SC","Source Han Sans SC","Microsoft YaHei",sans-serif;font-size:23px;font-weight:400;line-height:clamp(25.3px,2.2vw,33px);letter-spacing:.035em;opacity:.7}
 html[lang="zh-CN"] .studio-sidebar nav a:hover,html[lang="zh-CN"] .studio-sidebar nav a[aria-current]{opacity:1}
 html[lang="zh-CN"] .studio-sidebar nav small{font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:0}
 @media(max-width:900px) and (min-width:601px){html[lang="zh-CN"] .studio-sidebar nav a{font-size:21px}}
-@media(max-width:600px){.studio-sidebar nav a,html[lang="zh-CN"] .studio-sidebar nav a{line-height:14.3px}html[lang="zh-CN"] .studio-sidebar nav{gap:16px}html[lang="zh-CN"] .studio-sidebar nav a{font-size:13px;letter-spacing:0}}
+@media(max-width:600px){.studio-sidebar nav a,html[lang="zh-CN"] .studio-sidebar nav a{height:14.3px;line-height:14.3px}html[lang="zh-CN"] .studio-sidebar nav{gap:16px}html[lang="zh-CN"] .studio-sidebar nav a{font-size:13px;letter-spacing:0}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;animation:none!important}}
