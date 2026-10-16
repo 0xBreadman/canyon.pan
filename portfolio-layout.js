@@ -40,6 +40,13 @@ app.querySelector('.filter-toggle').onclick=()=>{const b=app.querySelector('.fil
 document.querySelector('.lang-switch').addEventListener('click',render);
 window.addEventListener('hashchange',render);
 function applyPresentation(){
+ outlet.querySelectorAll('.project-card').forEach(card=>{
+  const main=card.querySelector('.project-main'),company=main.querySelector('.project-company'),index=card.querySelector('.project-index');
+  const meta=document.createElement('div');meta.className='project-heading-meta';company.before(meta);meta.append(index,company);
+  const role=main.querySelector('.project-roleline');if(role)main.querySelector('h2').after(role);
+  const result=card.querySelector('.project-result');
+  [...result.querySelectorAll('strong')].forEach(strong=>{const description=strong.nextElementSibling;if(description?.tagName==='SPAN'){const item=document.createElement('div');item.className='project-metric';strong.before(item);item.append(strong,description);}});
+ });
  const zh=document.documentElement.lang==='zh-CN';
  topbar.querySelector('.studio-signature').textContent=tr('CANYON PAN — CONTENT & VISUAL PRACTICE','CANYON PAN — 内容策划与视觉实践');
  topbar.querySelector('.top-contact').textContent=tr('CONTACT','联系我');

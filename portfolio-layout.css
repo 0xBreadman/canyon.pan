@@ -46,6 +46,28 @@ a:focus-visible,button:focus-visible,.studio-strip:focus-visible{outline:2px sol
 @media(max-width:900px){.studio-content{padding:20px 20px 60px 0}.collection-heading{display:block}.collection-heading p{margin-top:16px;max-width:none}.collection-grid{gap:32px 18px}.collection-grid .studio-caption{font-size:14px}}
 @media(max-width:600px){.studio-content{padding:18px 14px 50px}.studio-sidebar nav{gap:16px;overflow-x:auto;scrollbar-width:none;justify-content:flex-start}.studio-sidebar nav a{font-size:13px;white-space:nowrap;flex-shrink:0}.collection-heading{padding:8px 0 24px;margin-bottom:24px}.collection-heading h1{font-size:34px}.collection-grid{grid-template-columns:1fr;gap:34px}.collection-grid .studio-caption{font-size:16px}.detail-media video{max-height:75vh}}
 /* Shared square-edged presentation, compact contact sheet. */
+.site-header .mark{order:0}.studio-signature{order:1}.site-header .top-contact{order:2;margin-left:auto}.site-header .lang-switch{order:3;margin-left:0;border:0;border-left:1px solid #181d2155;padding:4px 0 4px 18px;min-width:45px;font-size:11px}
+.studio-content .projects{padding:20px 0 56px;max-width:1080px;margin:0 auto}
+.studio-content .projects .section-head{padding:0 0 24px;display:flex;gap:24px;align-items:center;justify-content:space-between}
+.studio-content .projects .section-head p{font-size:13px;margin:0;color:#bfc2c2}
+.studio-content .project-card{display:grid;grid-template-columns:minmax(0,1fr) 190px;column-gap:40px;row-gap:24px;padding:32px 0 40px;align-items:start}
+.project-heading-meta{display:flex;align-items:baseline;gap:14px;margin-bottom:14px}
+.project-heading-meta .project-index{font-size:11px;color:#91999d;line-height:1.5}
+.project-heading-meta .project-company{font-size:13px;color:#c3c8ca;line-height:1.5;letter-spacing:0;margin:0;text-transform:none}
+.studio-content .project-main h2{font-size:28px;line-height:1.4;letter-spacing:-.025em;font-weight:600;margin:0 0 12px;max-width:24em}
+.studio-content .project-roleline{display:block;border:0;padding:0;margin:0 0 18px;font-size:12px;line-height:1.6;letter-spacing:0;color:#aab4b8;text-transform:none}
+.studio-content .project-summary{font-size:15px;line-height:1.85;color:#d4d8da;margin:0;max-width:62ch}
+.studio-content .project-main ul{font-size:14px;line-height:1.8;color:#c1c8cb;margin:14px 0 0;padding-left:19px;max-width:62ch}
+.studio-content .project-main li{color:inherit}.studio-content .project-main li+li{margin-top:4px}
+.studio-content .project-result{display:flex;flex-direction:column;gap:22px;margin:0;padding:38px 0 0 24px;border-left:1px solid #3c4448;align-self:stretch}
+.project-metric{display:flex;flex-direction:column;gap:7px}
+.studio-content .project-result strong{font-size:30px;font-weight:500;letter-spacing:-.03em;line-height:1.1;color:#eceee9}
+.studio-content .project-result span{font-size:12px;line-height:1.6;letter-spacing:0;text-transform:none;color:#b6c0c4;margin:0;max-width:22ch}
+.studio-content .project-evidence,.studio-content .project-tool-media{grid-column:1/-1;margin-top:0;padding:0;background:none;gap:18px}
+.studio-content .project-evidence img{height:auto;max-height:350px;object-fit:contain;background:transparent}
+.studio-content .project-evidence figcaption{font-size:11px;letter-spacing:0;text-transform:none;color:#acb5ba}
+@media(max-width:1050px){.studio-content .project-card{grid-template-columns:1fr;gap:20px}.studio-content .project-result{flex-direction:row;flex-wrap:wrap;gap:24px;border-left:0;border-top:1px solid #343b40;padding:18px 0 0}.project-metric{flex:1;min-width:120px}.studio-content .project-result strong{font-size:27px}}
+@media(max-width:600px){.site-header .top-contact{display:none}.site-header .lang-switch{margin-left:auto;padding-left:14px}.studio-content .projects{padding:8px 0 28px}.studio-content .projects .section-head{display:block;padding-bottom:16px}.studio-content .projects .section-head p{margin-top:10px;font-size:12px}.studio-content .project-card{padding:24px 0 30px;gap:18px}.project-heading-meta{gap:10px;margin-bottom:12px}.project-heading-meta .project-company{font-size:12px}.studio-content .project-main h2{font-size:23px;line-height:1.45;margin-bottom:10px}.studio-content .project-roleline{font-size:11px;margin-bottom:14px}.studio-content .project-summary{font-size:14px;line-height:1.85}.studio-content .project-main ul{font-size:13px;line-height:1.8;margin-top:12px}.studio-content .project-result{gap:20px;padding-top:16px}.studio-content .project-result strong{font-size:25px}.studio-content .project-result span{font-size:11px}.studio-content .project-evidence,.studio-content .project-tool-media{grid-column:1}}
 body>svg[width="0"]{position:absolute;pointer-events:none}
 html[lang="zh-CN"] .timeline-item.current h3:after{content:'在职'}
 @media(max-width:600px){.studio-app{min-height:calc(100dvh - 45px)}}
