@@ -18,6 +18,19 @@ let filter='web',cleanup=()=>{};
 const chapter=()=>location.hash.startsWith('#case/')?(location.hash.includes('film-')?'films':'websites'):({top:'profile',about:'profile',experience:'projects',work:'websites','site-cases':'websites',archive:'films'})[location.hash.slice(1)] || (['profile','projects','contact','films','websites'].includes(location.hash.slice(1))?location.hash.slice(1):'websites');
 function mediaElement(m,detail=false){const el=document.createElement(m.video?'video':'img');if(m.video){el.muted=!detail;el.controls=detail;el.playsInline=true;el.preload='metadata';el.loop=!detail;el.dataset.media=m.src;el.addEventListener('loadedmetadata',()=>{if(detail)el.style.aspectRatio=el.videoWidth+'/'+el.videoHeight;else el.currentTime=Math.min(2,el.duration*.15);});}else{el.src=m.src;el.alt=m.alt;el.loading='lazy';}return el;}
 function startMedia(){const io=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;if(e.isIntersecting){if(!v.src)v.src=v.dataset.media;}else v.pause();}),{rootMargin:'100px',threshold:.1});outlet.querySelectorAll('video').forEach(v=>io.observe(v));cleanup=()=>{io.disconnect();outlet.querySelectorAll('video').forEach(v=>{v.pause();v.removeAttribute('src');v.load();});};}
+function renderFilmGallery(selected, gallery){
+ const formats=[['wide','wide'],['wide','wide','wide','wide'],Array(6).fill('portrait'),Array(11).fill('portrait'),['portrait','wide'],['square','square','square','wide','wide','classic','classic'],['square','square','square','portrait','portrait'],Array(6).fill('portrait')][Number(selected.id.split('-')[1])];
+ gallery.classList.add('film-gallery');
+ const labels={wide:['Landscape','横屏'],portrait:['Portrait','竖屏'],square:['Square','方形'],classic:['Portrait · 3:4','竖屏 · 3:4']};
+ const groups=[...new Set(formats)];
+ groups.forEach(format=>{
+  const section=document.createElement('section');section.className='film-format';
+  if(groups.length>1){const heading=document.createElement('h2');heading.textContent=tr(...labels[format]);section.append(heading);}
+  const grid=document.createElement('div');grid.className='film-grid film-grid--'+format;
+  selected.media.forEach((m,i)=>{if(formats[i]!==format)return;const figure=document.createElement('figure');figure.className='film-item';const video=mediaElement(m,true);video.setAttribute('aria-label',selected.title()+' '+(i+1));const caption=document.createElement('figcaption');caption.textContent=String(i+1).padStart(2,'0');figure.append(video,caption);grid.append(figure);});
+  section.append(grid);gallery.append(section);
+ });
+}
 function render(){cleanup();outlet.replaceChildren();const section=chapter();outlet.dataset.page=section;
  app.querySelector('nav').innerHTML=[['profile','Profile','个人简介'],['websites','Websites','网站案例'],['films','Films','视频作品'],['projects','Projects','项目经历'],['contact','Contact','联系方式']].map(([id,en,zh],i)=>`<a href="#${id}" ${section===id?'aria-current="page"':''}><span>${tr(en,zh)}</span><small>0${i+1}</small></a>`).join('');
  app.querySelector('.studio-filter').hidden=true;
@@ -26,7 +39,7 @@ function render(){cleanup();outlet.replaceChildren();const section=chapter();out
  app.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{filter=b.dataset.filter;render();});
  const detailId=location.hash.startsWith('#case/')?location.hash.slice(6):null;
  const selected=entries.find(e=>e.id===detailId);
- if(selected){outlet.innerHTML=`<a class="back-work" href="#${section}">← ${tr('Back to work','返回作品')}</a><div class="detail-heading"><h1></h1><p></p></div><div class="detail-media"></div>`;outlet.querySelector('h1').textContent=selected.title();outlet.querySelector('.detail-heading p').textContent=selected.description();selected.media.forEach(m=>outlet.querySelector('.detail-media').append(mediaElement(m,true)));}
+ if(selected){outlet.innerHTML=`<a class="back-work" href="#${section}">← ${tr('Back to work','返回作品')}</a><div class="detail-heading"><h1></h1><p></p></div><div class="detail-media"></div>`;outlet.querySelector('h1').textContent=selected.title();outlet.querySelector('.detail-heading p').textContent=selected.description();const gallery=outlet.querySelector('.detail-media');if(selected.type==='film')renderFilmGallery(selected,gallery);else selected.media.forEach(m=>gallery.append(mediaElement(m,true)));}
  else if(section==='websites'||section==='films'){
  const film=section==='films';filter=film?'film':'web';
  outlet.innerHTML=`<header class="collection-heading"><div><span>${film?'03 / FILM & MOTION':'02 / DIGITAL EXPERIENCES'}</span><h1>${film?tr('Film & motion','视频作品'):tr('Website design','网站案例')}</h1></div><p>${film?tr('Brand stories, product films and social content.','品牌叙事、产品影像与社媒内容。'):tr('Four visual worlds. Each with its own point of view.','四种视觉世界，各自表达清晰的观点。')}</p></header><div class="collection-grid"></div>`;
