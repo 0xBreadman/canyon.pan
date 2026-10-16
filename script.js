@@ -137,6 +137,7 @@ const copy = [
 ];
 let currentLanguage = 'en';
 function setLanguage(language) {
+  try { localStorage.setItem('canyon-language', language); } catch {}
   currentLanguage = language; document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en';
   copy.forEach(([selector,en,zh]) => document.querySelectorAll(selector).forEach((node) => { node.innerHTML = language === 'zh' ? zh : en; }));
   document.querySelectorAll('.timeline-detail').forEach((node) => { node.textContent = language === 'zh' ? node.dataset.zh : node.dataset.en; });
@@ -146,4 +147,5 @@ function setLanguage(language) {
   document.title = language === 'zh' ? 'Canyon Pan / 潘谕 — 内容负责人 / 视觉策划' : 'Canyon Pan — Content Lead / Visual Planner';
 }
 document.querySelector('.lang-switch')?.addEventListener('click', () => setLanguage(currentLanguage === 'en' ? 'zh' : 'en'));
-setLanguage('en');
+let preferredLanguage;try { preferredLanguage=localStorage.getItem('canyon-language'); } catch {}
+setLanguage(preferredLanguage==='en'?'en':'zh');

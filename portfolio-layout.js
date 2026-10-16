@@ -12,7 +12,7 @@ app.innerHTML='<aside class="studio-sidebar"><div class="studio-breadcrumb">CANY
 sourceMain.before(app);
 const outlet=app.querySelector('.studio-content');
 const tr=(en,zh)=>document.documentElement.lang==='zh-CN'?zh:en;
-const entries=[...document.querySelectorAll('.case-card')].map((card,i)=>({id:'web-'+i,type:'web',title:()=>card.querySelector('.case-meta span').textContent,subtitle:()=>card.querySelector('h2').innerHTML.replace(/<br\s*\/?\s*>/gi,' ').replace(/<[^>]*>/g,''),description:()=>card.querySelector('p').textContent,media:[...card.querySelectorAll('img')].map(img=>({src:img.getAttribute('src'),alt:img.alt}))}));
+const entries=[...document.querySelectorAll('.case-card')].map((card,i)=>({id:'web-'+i,type:'web',title:()=>tr(['Lingerie','Jewelry','Footwear','Workspace'][i],['内衣','首饰','球鞋','桌搭'][i]),subtitle:()=>card.querySelector('h2').innerHTML.replace(/<br\s*\/?\s*>/gi,' ').replace(/<[^>]*>/g,''),description:()=>card.querySelector('p').textContent,media:[...card.querySelectorAll('img')].map(img=>({src:img.getAttribute('src'),alt:img.alt}))}));
 portfolio.forEach((group,i)=>entries.push({id:'film-'+i,type:'film',title:()=>tr(group.title,groupZh[group.title]),subtitle:()=>tr(group.items.length+' selected films',group.items.length+' 部精选作品'),description:()=>tr('Selected production work. Play each film to see the complete composition.','精选制作案例。点击播放，查看每部作品的完整画面。'),media:group.items.map(([file,label])=>({src:portfolioMediaUrl(webFilename[file]||file),video:true,alt:label}))}));
 let filter='web',cleanup=()=>{};
 const chapter=()=>location.hash.startsWith('#case/')?(location.hash.includes('film-')?'films':'websites'):({top:'profile',about:'profile',experience:'projects',work:'websites','site-cases':'websites',archive:'films'})[location.hash.slice(1)] || (['profile','projects','contact','films','websites'].includes(location.hash.slice(1))?location.hash.slice(1):'websites');
@@ -34,9 +34,42 @@ function render(){cleanup();outlet.replaceChildren();const section=chapter();out
  let down=false,start=0,left=0,moved=false;rail.addEventListener('pointerdown',ev=>{if(ev.pointerType!=='mouse')return;down=true;moved=false;start=ev.clientX;left=rail.scrollLeft;});rail.addEventListener('pointermove',ev=>{if(!down)return;const dx=ev.clientX-start;if(Math.abs(dx)>5){moved=true;rail.scrollLeft=left-dx;}});rail.addEventListener('pointerup',()=>down=false);rail.addEventListener('pointerleave',()=>down=false);rail.addEventListener('dragstart',ev=>ev.preventDefault());rail.addEventListener('click',ev=>{if(moved){ev.preventDefault();moved=false;}});
  });}
  else{const selectors={profile:['.hero','#about'],projects:['#projects','#experience'],contact:['#contact']}[section];selectors.forEach(s=>{const clone=sourceMain.querySelector(s).cloneNode(true);clone.hidden=false;clone.querySelectorAll('[id]').forEach(n=>n.removeAttribute('id'));clone.removeAttribute('id');outlet.append(clone);});}
- startMedia();window.scrollTo({top:0,behavior:'instant'});
+ applyPresentation();startMedia();window.scrollTo({top:0,behavior:'instant'});
 }
 app.querySelector('.filter-toggle').onclick=()=>{const b=app.querySelector('.filter-toggle'),box=app.querySelector('.filter-options');box.hidden=!box.hidden;b.setAttribute('aria-expanded',String(!box.hidden));};
 document.querySelector('.lang-switch').addEventListener('click',render);
 window.addEventListener('hashchange',render);
+function applyPresentation(){
+ const zh=document.documentElement.lang==='zh-CN';
+ topbar.querySelector('.studio-signature').textContent=tr('CANYON PAN — CONTENT & VISUAL PRACTICE','CANYON PAN — 内容策划与视觉实践');
+ topbar.querySelector('.top-contact').textContent=tr('CONTACT','联系我');
+ app.querySelector('.studio-breadcrumb').textContent=tr('CANYON PAN / PORTFOLIO','CANYON PAN / 个人作品集');
+ app.querySelector('.sidebar-bottom').innerHTML=tr('GUANGZHOU · CHINA<br>CONTENT / MOTION / WEB','中国 · 广州<br>内容 / 影像 / 网站')+'<span>2020 — 2026</span>';
+ const overline=outlet.querySelector('.collection-heading>div>span');
+ if(overline)overline.textContent=chapter()==='films'?tr('03 / FILM & MOTION','03 / 视频与动态影像'):tr('02 / DIGITAL EXPERIENCES','02 / 网站设计');
+ const portrait=outlet.querySelector('.hero-portrait figcaption');if(portrait)portrait.textContent=tr('Canyon Pan · INTJ','潘谕 Canyon · INTJ');
+ outlet.querySelectorAll('.project-evidence figcaption').forEach(node=>{const parts=node.textContent.split(' / ');if(parts.length===2)node.textContent=tr(parts[0],parts[1]);});
+ outlet.querySelectorAll('.timeline-item h3').forEach((node,i)=>{if(zh)node.textContent=['赢盛科技','广州赫特信息科技','吉米生物科技','甜秘密 / 优美科技'][i]||node.textContent;});
+ if(zh)outlet.querySelectorAll('.timeline-item>span').forEach(node=>node.textContent=node.textContent.replace('now','至今'));
+ outlet.querySelectorAll('.project-tool-media img').forEach(img=>{const frame=document.createElement('div');frame.className='tool-flat-frame';img.before(frame);frame.append(img);});
+ if(chapter()==='contact')renderContact();
+ const walker=document.createTreeWalker(app,NodeFilter.SHOW_TEXT);let n;while(n=walker.nextNode())n.nodeValue=n.nodeValue.replace(/[←-⇿➔➜➝➞➟➠➤➥➦➧➨➩➪➫➬➭➮➯➱➲]/g,'');
+ document.querySelector('.lang-switch').setAttribute('aria-label',zh?'切换为英文':'Switch to Chinese');
+}
+function renderContact(){
+ const original=sourceMain.querySelector('#contact');
+ outlet.innerHTML=`<section class="contact-sheet"><p class="contact-overline">${tr('05 / CONTACT','05 / 联系方式')}</p><h1>${tr('Let’s make it happen.','一起把想法落地。')}</h1><p class="contact-intro">${tr('Content planning, film production and visual experiences.','内容策划、视频制作与视觉体验。')}</p><div class="contact-direct"><a href="mailto:py1844636897@foxmail.com">py1844636897@foxmail.com</a><a class="contact-resume" download="Canyon-Pan-CV.pdf">${tr('Download résumé','下载简历')}</a></div><div class="contact-qr-pair"></div><p class="contact-location">${tr('Canyon Pan · Guangzhou, China','潘谕 Canyon · 中国广州')}</p></section>`;
+ outlet.querySelector('.contact-resume').href=original.querySelector('.cv-download').href;
+ [['wechat','WeChat','微信'],['linkedin','LinkedIn','领英']].forEach(([id,en,cn])=>{
+ const figure=document.createElement('figure');figure.className='contact-code '+id;
+ const img=original.querySelector('.'+id+'-qr-frame img').cloneNode(true);
+ figure.innerHTML='<div class="qr-paper"><div class="qr-code"></div></div><figcaption><strong></strong><span></span></figcaption>';
+ figure.querySelector('.qr-code').append(img);figure.querySelector('strong').textContent=tr(en,cn);
+ figure.querySelector('figcaption span').textContent=tr('Scan to connect','扫码联系');
+ if(id==='linkedin'){const a=document.createElement('a');a.href=original.querySelector('.linkedin-card figcaption a').href;a.target='_blank';a.rel='noopener noreferrer';a.textContent=tr('Open profile','查看主页');figure.querySelector('figcaption span').replaceWith(a);}
+ outlet.querySelector('.contact-qr-pair').append(figure);
+ });
+}
+let savedLanguage;try{savedLanguage=localStorage.getItem('canyon-language');}catch{}
+setLanguage(savedLanguage==='en'?'en':'zh');
 render();
