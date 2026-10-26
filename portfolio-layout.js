@@ -53,6 +53,7 @@ app.querySelector('.filter-toggle').onclick=()=>{const b=app.querySelector('.fil
 document.querySelector('.lang-switch').addEventListener('click',render);
 window.addEventListener('hashchange',render);
 function applyPresentation(){
+ if(chapter()==='profile')renderProfileCapabilities();
  outlet.querySelectorAll('.project-card').forEach(card=>{
   const main=card.querySelector('.project-main'),company=main.querySelector('.project-company'),index=card.querySelector('.project-index');
   const meta=document.createElement('div');meta.className='project-heading-meta';company.before(meta);meta.append(index,company);
@@ -75,6 +76,18 @@ function applyPresentation(){
  if(chapter()==='contact')renderContact();
  const walker=document.createTreeWalker(app,NodeFilter.SHOW_TEXT);let n;while(n=walker.nextNode())n.nodeValue=n.nodeValue.replace(/[←-⇿➔➜➝➞➟➠➤➥➦➧➨➩➪➫➬➭➮➯➱➲]/g,'');
  document.querySelector('.lang-switch').setAttribute('aria-label',zh?'切换为英文':'Switch to Chinese');
+}
+function renderProfileCapabilities(){
+ const intro=outlet.querySelector('.intro');
+ outlet.querySelector('.hero-copy').textContent=tr('Content planner & video producer. From creative direction to filming, editing and AI-assisted production.','内容策划 / 视频编导，贯通创意、拍摄、后期与 AI 辅助生产。');
+ const skills=[
+  ['Content planning','内容策划','Brand stories · Campaign concepts · Scripts & storyboards','品牌内容 · 活动创意 · 脚本分镜','Briefs / Script templates','需求拆解 / 脚本模板','#projects','Explore projects','查看项目'],
+  ['Film production','视频制作','On-set production · Editing · Ad creative iterations','拍摄执行 · 剪辑后期 · 广告素材迭代','Video structure tests / Asset standards','视频结构测试 / 素材标准','#films','Watch films','查看影片'],
+  ['Visual delivery','视觉落地','Site content · Product visuals · AI images & video','独立站内容 · 产品视觉 · AI 图像与视频','Prompt design / Image-to-video','提示词设计 / 图生视频','#websites','Explore websites','查看网站案例'],
+  ['Workflow tools','效率工具','Prompt management · Content libraries · Team workflows','提示词管理 · 内容资产库 · 团队协作流程','Prompt Dock / Work-order automation','Prompt Dock / 工单自动化','#projects','See workflow projects','查看工具与流程项目']
+ ];
+ intro.className='profile-overview';
+ intro.innerHTML=`<div class="profile-section-heading"><span>01 / ${tr('CAPABILITIES','能力概览')}</span><h2>${tr('What I bring to the work.','从想法到交付，我能做什么。')}</h2></div><div class="capability-grid">${skills.map((s,i)=>`<article class="capability-item"><span class="capability-number">0${i+1}</span><h3>${tr(s[0],s[1])}</h3><p>${tr(s[2],s[3])}</p><p class="capability-method">${tr(s[4],s[5])}</p><a href="${s[6]}">${tr(s[7],s[8])}</a></article>`).join('')}</div><div class="profile-workflow"><h3>${tr('HOW I WORK','日常工作流')}</h3><ol>${[['Define the brief','需求梳理'],['Plan the script','脚本策划'],['Film / AI creation','拍摄 / AI 生成'],['Edit & deliver','剪辑交付'],['Test & refine','测试复盘']].map((s,i)=>`<li><span>0${i+1}</span>${tr(...s)}</li>`).join('')}</ol></div>`;
 }
 function renderContact(){
  const original=sourceMain.querySelector('#contact');
